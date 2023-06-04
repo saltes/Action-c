@@ -1,5 +1,10 @@
 name: C code to flowchart
-on: [push]
+on:
+  workflow_dispatch:
+    inputs:
+      filename:
+        description: 'The name of the C file to convert'
+        required: true
 jobs:
   convert:
     runs-on: ubuntu-latest
@@ -8,8 +13,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Install code2flow
         run: sudo pip install code2flow
-      - name: Convert main.c to flowchart.png
-        run: code2flow main.c -o flowchart.png
+      - name: Convert C file to flowchart.png
+        run: code2flow code/${{ github.event.inputs.filename }} -o flowchart.png
       - name: Upload flowchart.png to GitHub repository
         uses: actions/upload-artifact@v2
         with:
