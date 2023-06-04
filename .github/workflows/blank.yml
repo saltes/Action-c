@@ -1,0 +1,17 @@
+name: C code to flowchart
+on: [push]
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Install code2flow
+        run: sudo pip install code2flow
+      - name: Convert main.c to flowchart.png
+        run: code2flow main.c -o flowchart.png
+      - name: Upload flowchart.png to GitHub repository
+        uses: actions/upload-artifact@v2
+        with:
+          name: flowchart
+          path: flowchart.png
